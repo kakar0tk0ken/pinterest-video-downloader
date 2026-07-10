@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pinterest Video Downloader</title>
+    <link rel="icon" type="image/svg+xml" href="icon.svg">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #0f0f1a;
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: #1a1a2e;
+            border-radius: 20px;
+            padding: 40px;
+            width: 600px;
+            max-width: 94vw;
+            box-shadow: 0 20px 60px rgba(0,0,0,.5);
+            border: 1px solid #2a2a4a;
+        }
+        h1 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #fff;
+        }
+        h1 span { color: #e74c3c; }
+        .sub { font-size: 13px; color: #888; margin-bottom: 24px; }
+        label { font-size: 13px; font-weight: 500; color: #aaa; display: block; margin-bottom: 6px; }
+        .input-group { display: flex; gap: 8px; }
+        input {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 1px solid #333;
+            background: #12122a;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: .2s;
+        }
+        input:focus { border-color: #e74c3c; }
+        input::placeholder { color: #555; }
+        button {
+            padding: 12px 20px;
+            border-radius: 10px;
+            border: none;
+            background: #e74c3c;
+            color: #fff;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: .2s;
+            white-space: nowrap;
+        }
+        button:hover { background: #c0392b; transform: translateY(-1px); }
+        button:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+        .preview {
+            margin-top: 20px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #12122a;
+            display: none;
+            border: 1px solid #2a2a4a;
+        }
+        .vid-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0a0a18;
+            min-height: 120px;
+            overflow: hidden;
+        }
+        .vid-wrap video {
+            width: 100%;
+            max-height: 380px;
+            display: block;
+            transition: transform .25s;
+        }
+        .info {
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+        .info .size { font-size: 12px; color: #888; }
+        .info .res { font-size: 12px; color: #4caf50; font-weight: 600; }
+        .dl-btn { background: #2d2d5e; padding: 8px 16px; font-size: 13px; }
+        .dl-btn:hover { background: #3d3d7e; }
+        .rotate-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-top: 1px solid #222;
+        }
+        .rotate-row .rot-label { font-size: 12px; color: #666; margin-right: 4px; }
+        .rotate-row .rot-btn {
+            background: #1e1e3a;
+            color: #aaa;
+            border: 1px solid #333;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: .2s;
+            line-height: 1.4;
+        }
+        .rotate-row .rot-btn:hover { background: #2d2d5e; color: #fff; border-color: #555; }
+        .rotate-row .rot-btn.active { background: #2d2d5e; color: #e74c3c; border-color: #e74c3c; }
+        .rotate-row .rot-angle { font-size: 12px; color: #888; margin-left: auto; }
+        .name-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px 12px;
+            border-top: 1px solid #222;
+        }
+        .name-label { font-size: 12px; color: #666; white-space: nowrap; }
+        .name-row input {
+            flex: 1;
+            padding: 5px 8px;
+            border-radius: 6px;
+            border: 1px solid #333;
+            background: #12122a;
+            color: #ddd;
+            font-size: 13px;
+            outline: none;
+            min-width: 0;
+        }
+        .name-row input:focus { border-color: #e74c3c; }
+        .name-ext { font-size: 13px; color: #888; font-weight: 500; }
+        .error {
+            margin-top: 14px;
+            padding: 10px 14px;
+            background: #2a1018;
+            border: 1px solid #4a1a28;
+            border-radius: 10px;
+            color: #e74c3c;
+            font-size: 13px;
+            display: none;
+        }
+        .footer { margin-top: 20px; text-align: center; font-size: 12px; color: #444; }
+        .examples { margin-top: 14px; font-size: 12px; color: #555; }
+        .examples code {
+            color: #888;
+            background: #12122a;
+            padding: 2px 6px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: .2s;
+            word-break: break-all;
+        }
+        .examples code:hover { color: #e74c3c; background: #1a1a3a; }
+        .status { font-size: 12px; color: #888; margin-top: 10px; display: none; }
+        .note { font-size: 11px; color: #555; margin-top: 8px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pinterest <span>Video Downloader</span></h1>
+        <p class="sub">Download Pinterest videos at the highest resolution</p>
+
+        <label for="url">Paste a Pinterest video URL</label>
+        <div class="input-group">
+            <input type="url" id="url" placeholder="https://v1.pinimg.com/videos/..." autofocus>
+            <button id="fetchBtn">Load</button>
+        </div>
+
+        <div class="examples">
+            Try: <code>https://v1.pinimg.com/videos/mc/720p/bb/93/8e/bb938e209a1e96e1151efb0fbae9ab88.mp4</code>
+        </div>
+
+        <div class="preview" id="preview">
+            <div class="vid-wrap">
+                <video id="previewVid" controls playsinline></video>
+            </div>
+            <div class="info">
+                <div>
+                    <div class="res" id="resolution">-</div>
+                    <div class="size" id="fileSize">-</div>
+                </div>
+                <button class="dl-btn" id="downloadBtn">Download</button>
+            </div>
+            <div class="rotate-row">
+                <span class="rot-label">Rotate:</span>
+                <button class="rot-btn" id="rotLeft" title="Rotate left 90\u00b0">&#x21BA;</button>
+                <button class="rot-btn" id="rotRight" title="Rotate right 90\u00b0">&#x21BB;</button>
+                <button class="rot-btn" id="rotReset" title="Reset rotation">&#x21C9;</button>
+                <span class="rot-angle" id="rotAngle">0&deg;</span>
+            </div>
+            <div class="name-row">
+                <span class="name-label">Save as:</span>
+                <input type="text" id="fileName" value="pinterest_video">
+                <span class="name-ext">.mp4</span>
+            </div>
+        </div>
+
+        <div class="error" id="error"></div>
+        <div class="status" id="status"></div>
+        <div class="footer">Downloads video at highest available resolution</div>
+        <div class="note" id="rotNote"></div>
+    </div>
+
+    <script>
+        const urlInput = document.getElementById('url');
+        const fetchBtn = document.getElementById('fetchBtn');
+        const preview = document.getElementById('preview');
+        const previewVid = document.getElementById('previewVid');
+        const resolution = document.getElementById('resolution');
+        const fileSize = document.getElementById('fileSize');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const errorDiv = document.getElementById('error');
+        const status = document.getElementById('status');
+        const fileNameInput = document.getElementById('fileName');
+        const rotLeft = document.getElementById('rotLeft');
+        const rotRight = document.getElementById('rotRight');
+        const rotReset = document.getElementById('rotReset');
+        const rotAngle = document.getElementById('rotAngle');
+        const rotNote = document.getElementById('rotNote');
+
+        let currentUrl = '';
+        let rotation = 0;
+
+        function setRotation(deg) {
+            rotation = ((deg % 360) + 360) % 360;
+            previewVid.style.transform = `rotate(${rotation}deg)`;
+            rotAngle.textContent = rotation + '\u00b0';
+            if (rotation !== 0) {
+                rotNote.textContent = 'Note: Rotation is applied visually. Downloaded video will be re-encoded with rotation.';
+            } else {
+                rotNote.textContent = '';
+            }
+        }
+
+        function resetRotation() { setRotation(0); }
+
+        function setStatus(msg) { status.textContent = msg; status.style.display = 'block'; }
+        function hideStatus() { status.style.display = 'none'; }
+        function showError(msg) { errorDiv.textContent = msg; errorDiv.style.display = msg ? 'block' : 'none'; if (msg) preview.style.display = 'none'; }
+
+        function toHighestRes(url) {
+            // Try to upgrade to 1080p if available
+            const m = url.match(/(\/videos\/\w+\/)\d+p(\/.*\.mp4)/);
+            if (m) return m[1] + '1080p' + m[2];
+            return url;
+        }
+
+        function getFilename() {
+            const name = fileNameInput.value.trim() || 'pinterest_video';
+            return name.replace(/[^a-zA-Z0-9_-]/g, '_') + '.mp4';
+        }
+
+        function formatSize(bytes) {
+            if (!bytes) return null;
+            const u = ['B', 'KB', 'MB'];
+            let i = 0, s = bytes;
+            while (s >= 1024 && i < 2) { s /= 1024; i++; }
+            return s.toFixed(1) + ' ' + u[i];
+        }
+
+        function showPreview(url) {
+            currentUrl = url;
+            previewVid.src = url;
+            preview.style.display = 'block';
+            resolution.textContent = 'Loading...';
+            fileSize.textContent = '';
+
+            previewVid.onloadedmetadata = () => {
+                resolution.textContent = previewVid.videoWidth + ' \u00d7 ' + previewVid.videoHeight + ' px';
+                const dur = previewVid.duration;
+                if (dur) fileSize.textContent = Math.round(dur) + 's';
+                hideStatus();
+            };
+            previewVid.onerror = () => {
+                resolution.textContent = 'Load failed';
+            };
+        }
+
+        async function loadVideo(url) {
+            showError('');
+            preview.style.display = 'none';
+            setStatus('Loading...');
+            fetchBtn.disabled = true;
+            resetRotation();
+
+            const highUrl = toHighestRes(url);
+            let loaded = false;
+
+            previewVid.src = highUrl;
+            try {
+                await new Promise((resolve, reject) => {
+                    previewVid.onloadedmetadata = resolve;
+                    previewVid.onerror = reject;
+                    if (previewVid.readyState >= 1) resolve();
+                });
+                currentUrl = highUrl;
+                loaded = true;
+            } catch {
+                const sizes = ['1080p', '720p', '480p', '360p'];
+                for (const s of sizes) {
+                    const fallback = url.replace(/\d+p/, s);
+                    try {
+                        await new Promise((resolve, reject) => {
+                            previewVid.onloadedmetadata = () => { currentUrl = fallback; resolve(); };
+                            previewVid.onerror = reject;
+                            previewVid.src = fallback;
+                        });
+                        loaded = true;
+                        break;
+                    } catch {}
+                }
+                if (!loaded && url !== highUrl) {
+                    try {
+                        await new Promise((resolve, reject) => {
+                            previewVid.onloadedmetadata = () => { currentUrl = url; resolve(); };
+                            previewVid.onerror = reject;
+                            previewVid.src = url;
+                        });
+                        loaded = true;
+                    } catch {}
+                }
+            }
+
+            fetchBtn.disabled = false;
+
+            if (loaded) {
+                preview.style.display = 'block';
+                resolution.textContent = (previewVid.videoWidth || '?') + ' \u00d7 ' + (previewVid.videoHeight || '?') + ' px';
+                const dur = previewVid.duration;
+                if (dur) fileSize.textContent = Math.round(dur) + 's';
+                hideStatus();
+                try {
+                    const r = await fetch(currentUrl, { method: 'HEAD', signal: AbortSignal.timeout(5000) });
+                    if (r.ok) {
+                        const cl = r.headers.get('content-length');
+                        if (cl) fileSize.textContent = formatSize(parseInt(cl));
+                    }
+                } catch {}
+            } else {
+                showError('Could not load this video. Check the URL or try a different Pinterest video.');
+                hideStatus();
+            }
+        }
+
+        async function downloadVideo() {
+            if (!currentUrl) return;
+            downloadBtn.disabled = true;
+            downloadBtn.textContent = 'Processing...';
+
+            if (rotation !== 0) {
+                // Attempt rotated download via canvas + MediaRecorder
+                try {
+                    const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(currentUrl)}`;
+                    const r = await fetch(proxyUrl, { signal: AbortSignal.timeout(8000) });
+                    if (r.ok) {
+                        const blob = await r.blob();
+                        const objUrl = URL.createObjectURL(blob);
+                        const vid = document.createElement('video');
+                        vid.src = objUrl;
+                        vid.muted = true;
+                        vid.playsinline = true;
+                        vid.crossOrigin = 'anonymous';
+                        await vid.play();
+
+                        const w = vid.videoWidth;
+                        const h = vid.videoHeight;
+                        const swap = rotation % 180 !== 0;
+                        const cw = swap ? h : w;
+                        const ch = swap ? w : h;
+
+                        const canvas = document.createElement('canvas');
+                        canvas.width = cw;
+                        canvas.height = ch;
+                        const ctx = canvas.getContext('2d');
+
+                        const stream = canvas.captureStream(30);
+                        const chunks = [];
+                        const recorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
+                        recorder.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
+                        recorder.onstop = () => {
+                            const finalBlob = new Blob(chunks, { type: 'video/webm' });
+                            const blobUrl = URL.createObjectURL(finalBlob);
+                            const a = document.createElement('a');
+                            a.href = blobUrl;
+                            a.download = getFilename();
+                            document.body.appendChild(a);
+                            a.click();
+                            document.body.removeChild(a);
+                            setTimeout(() => { URL.revokeObjectURL(blobUrl); URL.revokeObjectURL(objUrl); }, 5000);
+                            downloadBtn.disabled = false;
+                            downloadBtn.textContent = 'Download';
+                        };
+                        recorder.start();
+
+                        const deg = rotation * Math.PI / 180;
+                        function drawFrame() {
+                            ctx.save();
+                            ctx.clearRect(0, 0, cw, ch);
+                            ctx.translate(cw / 2, ch / 2);
+                            ctx.rotate(deg);
+                            ctx.drawImage(vid, -w / 2, -h / 2, w, h);
+                            ctx.restore();
+                            if (!vid.paused && !vid.ended) requestAnimationFrame(drawFrame);
+                        }
+                        drawFrame();
+                        vid.onended = () => setTimeout(() => recorder.stop(), 200);
+                        return;
+                    }
+                } catch {}
+            }
+
+            // Direct download (no rotation or proxy failed)
+            downloadBtn.textContent = 'Downloading...';
+            const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(currentUrl)}`;
+            try {
+                const r = await fetch(proxyUrl, { signal: AbortSignal.timeout(10000) });
+                if (r.ok) {
+                    const blob = await r.blob();
+                    const blobUrl = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = blobUrl;
+                    a.download = getFilename();
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    setTimeout(() => URL.revokeObjectURL(blobUrl), 5000);
+                    downloadBtn.disabled = false;
+                    downloadBtn.textContent = 'Download';
+                    return;
+                }
+            } catch {}
+
+            downloadBtn.disabled = false;
+            downloadBtn.textContent = 'Download';
+            window.open(currentUrl, '_blank');
+        }
+
+        rotLeft.addEventListener('click', () => setRotation(rotation - 90));
+        rotRight.addEventListener('click', () => setRotation(rotation + 90));
+        rotReset.addEventListener('click', resetRotation);
+
+        fetchBtn.addEventListener('click', () => {
+            const url = urlInput.value.trim();
+            if (!url) { showError('Paste a Pinterest video URL first.'); return; }
+            if (!url.startsWith('http')) { showError('URL must start with http:// or https://'); return; }
+            resetRotation();
+            loadVideo(url);
+        });
+
+        urlInput.addEventListener('keydown', e => { if (e.key === 'Enter') fetchBtn.click(); });
+        downloadBtn.addEventListener('click', downloadVideo);
+
+        document.querySelectorAll('.examples code').forEach(el => {
+            el.addEventListener('click', () => {
+                urlInput.value = el.textContent;
+                fetchBtn.click();
+            });
+        });
+    </script>
+</body>
+</html>
