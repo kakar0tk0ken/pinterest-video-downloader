@@ -158,7 +158,7 @@
         function showError(msg) { errorDiv.textContent = msg; errorDiv.style.display = msg ? 'block' : 'none'; if (msg) preview.style.display = 'none'; }
 
         function isPinUrl(url) {
-            return /pinterest\.(com|ph|[a-z]{2})\/pin\//i.test(url);
+            return /pinterest\.(com|ph|[a-z]{2})\/pin\//i.test(url) || /^https?:\/\/pin\.it\//i.test(url);
         }
 
         function getFilename() {
@@ -233,7 +233,6 @@
 
             if (isPinUrl(url)) {
                 setStatus('Extracting video from pin...');
-                // Try multiple proxy services to fetch the pin page
                 const proxies = [
                     u => `https://corsproxy.io/?url=${encodeURIComponent(u)}`,
                     u => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
@@ -241,7 +240,7 @@
                 let html = null;
                 for (const p of proxies) {
                     try {
-                        const r = await fetch(p(url), { signal: AbortSignal.timeout(10000) });
+                        const r = await fetch(p(url), { signal: AbortSignal.timeout(12000) });
                         if (r.ok) { html = await r.text(); break; }
                     } catch {}
                 }
@@ -249,14 +248,23 @@
                     const urls = extractVideoUrls(html);
                     if (urls.length > 0) {
                         videoUrl = pickBestVideo(urls);
+                    } else {
+                        // Check if it's an image pin (no video URLs found)
+                        if (/i\.pinimg\.com\/originals/i.test(html)) {
+                            fetchBtn.disabled = false;
+                            showError('This pin contains an image, not a video. Use the image downloader instead.');
+                            hideStatus();
+                            return;
+                        }
                     }
                 }
                 if (videoUrl === url) {
                     fetchBtn.disabled = false;
-                    showError('Could not extract video from this pin. To get a direct video URL: open the pin in your browser, right-click the video, and select "Copy video URL".');
+                    showError('Could not extract video from this pin. Try this: open the pin in your browser \u2192 right-click the video \u2192 "Copy video URL" \u2192 paste it here. Or use a direct v1.pinimg.com/videos/... URL.');
                     hideStatus();
                     return;
                 }
+                setStatus('Loading video...');
             }
 
             let loaded = false;
