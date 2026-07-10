@@ -25,140 +25,54 @@
             box-shadow: 0 20px 60px rgba(0,0,0,.5);
             border: 1px solid #2a2a4a;
         }
-        h1 {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 6px;
-            color: #fff;
-        }
+        h1 { font-size: 22px; font-weight: 700; margin-bottom: 6px; color: #fff; }
         h1 span { color: #e74c3c; }
         .sub { font-size: 13px; color: #888; margin-bottom: 24px; }
         label { font-size: 13px; font-weight: 500; color: #aaa; display: block; margin-bottom: 6px; }
         .input-group { display: flex; gap: 8px; }
         input {
-            flex: 1;
-            padding: 12px 16px;
-            border-radius: 10px;
-            border: 1px solid #333;
-            background: #12122a;
-            color: #fff;
-            font-size: 14px;
-            outline: none;
-            transition: .2s;
+            flex: 1; padding: 12px 16px; border-radius: 10px; border: 1px solid #333;
+            background: #12122a; color: #fff; font-size: 14px; outline: none; transition: .2s;
         }
         input:focus { border-color: #e74c3c; }
         input::placeholder { color: #555; }
         button {
-            padding: 12px 20px;
-            border-radius: 10px;
-            border: none;
-            background: #e74c3c;
-            color: #fff;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            transition: .2s;
-            white-space: nowrap;
+            padding: 12px 20px; border-radius: 10px; border: none; background: #e74c3c;
+            color: #fff; font-weight: 600; font-size: 14px; cursor: pointer; transition: .2s; white-space: nowrap;
         }
         button:hover { background: #c0392b; transform: translateY(-1px); }
         button:disabled { opacity: .5; cursor: not-allowed; transform: none; }
         .preview {
-            margin-top: 20px;
-            border-radius: 12px;
-            overflow: hidden;
-            background: #12122a;
-            display: none;
-            border: 1px solid #2a2a4a;
+            margin-top: 20px; border-radius: 12px; overflow: hidden;
+            background: #12122a; display: none; border: 1px solid #2a2a4a;
         }
-        .vid-wrap {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #0a0a18;
-            min-height: 120px;
-            overflow: hidden;
-        }
-        .vid-wrap video {
-            width: 100%;
-            max-height: 380px;
-            display: block;
-            transition: transform .25s;
-        }
-        .info {
-            padding: 14px 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
-        }
+        .vid-wrap { display: flex; align-items: center; justify-content: center; background: #0a0a18; min-height: 120px; overflow: hidden; }
+        .vid-wrap video { width: 100%; max-height: 380px; display: block; transition: transform .25s; }
+        .info { padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
         .info .size { font-size: 12px; color: #888; }
         .info .res { font-size: 12px; color: #4caf50; font-weight: 600; }
         .dl-btn { background: #2d2d5e; padding: 8px 16px; font-size: 13px; }
         .dl-btn:hover { background: #3d3d7e; }
-        .rotate-row {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 16px;
-            border-top: 1px solid #222;
-        }
+        .rotate-row { display: flex; align-items: center; gap: 6px; padding: 8px 16px; border-top: 1px solid #222; }
         .rotate-row .rot-label { font-size: 12px; color: #666; margin-right: 4px; }
         .rotate-row .rot-btn {
-            background: #1e1e3a;
-            color: #aaa;
-            border: 1px solid #333;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: .2s;
-            line-height: 1.4;
+            background: #1e1e3a; color: #aaa; border: 1px solid #333; padding: 4px 10px;
+            border-radius: 6px; font-size: 14px; cursor: pointer; transition: .2s; line-height: 1.4;
         }
         .rotate-row .rot-btn:hover { background: #2d2d5e; color: #fff; border-color: #555; }
-        .rotate-row .rot-btn.active { background: #2d2d5e; color: #e74c3c; border-color: #e74c3c; }
         .rotate-row .rot-angle { font-size: 12px; color: #888; margin-left: auto; }
-        .name-row {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 16px 12px;
-            border-top: 1px solid #222;
-        }
+        .name-row { display: flex; align-items: center; gap: 6px; padding: 8px 16px 12px; border-top: 1px solid #222; }
         .name-label { font-size: 12px; color: #666; white-space: nowrap; }
         .name-row input {
-            flex: 1;
-            padding: 5px 8px;
-            border-radius: 6px;
-            border: 1px solid #333;
-            background: #12122a;
-            color: #ddd;
-            font-size: 13px;
-            outline: none;
-            min-width: 0;
+            flex: 1; padding: 5px 8px; border-radius: 6px; border: 1px solid #333;
+            background: #12122a; color: #ddd; font-size: 13px; outline: none; min-width: 0;
         }
         .name-row input:focus { border-color: #e74c3c; }
         .name-ext { font-size: 13px; color: #888; font-weight: 500; }
-        .error {
-            margin-top: 14px;
-            padding: 10px 14px;
-            background: #2a1018;
-            border: 1px solid #4a1a28;
-            border-radius: 10px;
-            color: #e74c3c;
-            font-size: 13px;
-            display: none;
-        }
+        .error { margin-top: 14px; padding: 10px 14px; background: #2a1018; border: 1px solid #4a1a28; border-radius: 10px; color: #e74c3c; font-size: 13px; display: none; }
         .footer { margin-top: 20px; text-align: center; font-size: 12px; color: #444; }
         .examples { margin-top: 14px; font-size: 12px; color: #555; }
-        .examples code {
-            color: #888;
-            background: #12122a;
-            padding: 2px 6px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: .2s;
-            word-break: break-all;
-        }
+        .examples code { color: #888; background: #12122a; padding: 2px 6px; border-radius: 4px; cursor: pointer; transition: .2s; word-break: break-all; }
         .examples code:hover { color: #e74c3c; background: #1a1a3a; }
         .status { font-size: 12px; color: #888; margin-top: 10px; display: none; }
         .note { font-size: 11px; color: #555; margin-top: 8px; text-align: center; }
@@ -169,14 +83,14 @@
         <h1>Pinterest <span>Video Downloader</span></h1>
         <p class="sub">Download Pinterest videos at the highest resolution</p>
 
-        <label for="url">Paste a Pinterest video URL</label>
+        <label for="url">Paste a Pinterest pin URL or direct video URL</label>
         <div class="input-group">
-            <input type="url" id="url" placeholder="https://v1.pinimg.com/videos/..." autofocus>
+            <input type="url" id="url" placeholder="https://www.pinterest.com/pin/..." autofocus>
             <button id="fetchBtn">Load</button>
         </div>
 
         <div class="examples">
-            Try: <code>https://v1.pinimg.com/videos/mc/720p/bb/93/8e/bb938e209a1e96e1151efb0fbae9ab88.mp4</code>
+            Try pin: <code>https://ph.pinterest.com/pin/617837642701408819/</code>
         </div>
 
         <div class="preview" id="preview">
@@ -206,7 +120,7 @@
 
         <div class="error" id="error"></div>
         <div class="status" id="status"></div>
-        <div class="footer">Downloads video at highest available resolution</div>
+        <div class="footer">Supports pin URLs and direct video URLs</div>
         <div class="note" id="rotNote"></div>
     </div>
 
@@ -234,11 +148,7 @@
             rotation = ((deg % 360) + 360) % 360;
             previewVid.style.transform = `rotate(${rotation}deg)`;
             rotAngle.textContent = rotation + '\u00b0';
-            if (rotation !== 0) {
-                rotNote.textContent = 'Note: Rotation is applied visually. Downloaded video will be re-encoded with rotation.';
-            } else {
-                rotNote.textContent = '';
-            }
+            rotNote.textContent = rotation !== 0 ? 'Rotation is baked into the downloaded video via re-encode.' : '';
         }
 
         function resetRotation() { setRotation(0); }
@@ -247,11 +157,8 @@
         function hideStatus() { status.style.display = 'none'; }
         function showError(msg) { errorDiv.textContent = msg; errorDiv.style.display = msg ? 'block' : 'none'; if (msg) preview.style.display = 'none'; }
 
-        function toHighestRes(url) {
-            // Try to upgrade to 1080p if available
-            const m = url.match(/(\/videos\/\w+\/)\d+p(\/.*\.mp4)/);
-            if (m) return m[1] + '1080p' + m[2];
-            return url;
+        function isPinUrl(url) {
+            return /pinterest\.(com|ph|[a-z]{2})\/pin\//i.test(url);
         }
 
         function getFilename() {
@@ -267,22 +174,52 @@
             return s.toFixed(1) + ' ' + u[i];
         }
 
+        function pickBestVideo(urls) {
+            const resOrder = [4320, 2160, 1440, 1080, 720, 540, 480, 360, 240];
+            let best = null, bestIdx = -1;
+            for (const u of urls) {
+                const m = u.match(/_(\d+)w\.mp4$/);
+                if (!m) continue;
+                const res = parseInt(m[1]);
+                const idx = resOrder.indexOf(res);
+                if (idx !== -1 && (best === null || idx < bestIdx)) {
+                    best = u;
+                    bestIdx = idx;
+                }
+            }
+            return best || urls[0];
+        }
+
+        function extractVideoUrls(html) {
+            const seen = new Set();
+            const urls = [];
+            const re = /https?:\/\/v1\.pinimg\.com\/videos\/iht\/[^"'\s<>]+\.mp4/g;
+            let m;
+            while ((m = re.exec(html)) !== null) {
+                if (!seen.has(m[0])) {
+                    seen.add(m[0]);
+                    urls.push(m[0]);
+                }
+            }
+            return urls;
+        }
+
+        function toHighestResMp4(url) {
+            return url.replace(/_(\d+)w/, '_1080w').replace(/_(\d+)p/, '_1080p');
+        }
+
         function showPreview(url) {
             currentUrl = url;
             previewVid.src = url;
             preview.style.display = 'block';
             resolution.textContent = 'Loading...';
             fileSize.textContent = '';
-
             previewVid.onloadedmetadata = () => {
                 resolution.textContent = previewVid.videoWidth + ' \u00d7 ' + previewVid.videoHeight + ' px';
-                const dur = previewVid.duration;
-                if (dur) fileSize.textContent = Math.round(dur) + 's';
+                if (previewVid.duration) fileSize.textContent = Math.round(previewVid.duration) + 's';
                 hideStatus();
             };
-            previewVid.onerror = () => {
-                resolution.textContent = 'Load failed';
-            };
+            previewVid.onerror = () => { resolution.textContent = 'Load failed'; };
         }
 
         async function loadVideo(url) {
@@ -292,22 +229,49 @@
             fetchBtn.disabled = true;
             resetRotation();
 
-            const highUrl = toHighestRes(url);
-            let loaded = false;
+            let videoUrl = url;
 
-            previewVid.src = highUrl;
+            if (isPinUrl(url)) {
+                setStatus('Extracting video from pin...');
+                // Try multiple proxy services to fetch the pin page
+                const proxies = [
+                    u => `https://corsproxy.io/?url=${encodeURIComponent(u)}`,
+                    u => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
+                ];
+                let html = null;
+                for (const p of proxies) {
+                    try {
+                        const r = await fetch(p(url), { signal: AbortSignal.timeout(10000) });
+                        if (r.ok) { html = await r.text(); break; }
+                    } catch {}
+                }
+                if (html) {
+                    const urls = extractVideoUrls(html);
+                    if (urls.length > 0) {
+                        videoUrl = pickBestVideo(urls);
+                    }
+                }
+                if (videoUrl === url) {
+                    fetchBtn.disabled = false;
+                    showError('Could not extract video from this pin. To get a direct video URL: open the pin in your browser, right-click the video, and select "Copy video URL".');
+                    hideStatus();
+                    return;
+                }
+            }
+
+            let loaded = false;
             try {
                 await new Promise((resolve, reject) => {
                     previewVid.onloadedmetadata = resolve;
                     previewVid.onerror = reject;
                     if (previewVid.readyState >= 1) resolve();
                 });
-                currentUrl = highUrl;
+                currentUrl = videoUrl;
                 loaded = true;
             } catch {
                 const sizes = ['1080p', '720p', '480p', '360p'];
                 for (const s of sizes) {
-                    const fallback = url.replace(/\d+p/, s);
+                    const fallback = videoUrl.replace(/\d+p/, s).replace(/_(\d+)w/, '_' + s.replace('p', '') + 'w');
                     try {
                         await new Promise((resolve, reject) => {
                             previewVid.onloadedmetadata = () => { currentUrl = fallback; resolve(); };
@@ -318,12 +282,12 @@
                         break;
                     } catch {}
                 }
-                if (!loaded && url !== highUrl) {
+                if (!loaded) {
                     try {
                         await new Promise((resolve, reject) => {
-                            previewVid.onloadedmetadata = () => { currentUrl = url; resolve(); };
+                            previewVid.onloadedmetadata = () => { currentUrl = videoUrl; resolve(); };
                             previewVid.onerror = reject;
-                            previewVid.src = url;
+                            previewVid.src = videoUrl;
                         });
                         loaded = true;
                     } catch {}
@@ -335,8 +299,7 @@
             if (loaded) {
                 preview.style.display = 'block';
                 resolution.textContent = (previewVid.videoWidth || '?') + ' \u00d7 ' + (previewVid.videoHeight || '?') + ' px';
-                const dur = previewVid.duration;
-                if (dur) fileSize.textContent = Math.round(dur) + 's';
+                if (previewVid.duration) fileSize.textContent = Math.round(previewVid.duration) + 's';
                 hideStatus();
                 try {
                     const r = await fetch(currentUrl, { method: 'HEAD', signal: AbortSignal.timeout(5000) });
@@ -357,7 +320,6 @@
             downloadBtn.textContent = 'Processing...';
 
             if (rotation !== 0) {
-                // Attempt rotated download via canvas + MediaRecorder
                 try {
                     const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(currentUrl)}`;
                     const r = await fetch(proxyUrl, { signal: AbortSignal.timeout(8000) });
@@ -368,7 +330,6 @@
                         vid.src = objUrl;
                         vid.muted = true;
                         vid.playsinline = true;
-                        vid.crossOrigin = 'anonymous';
                         await vid.play();
 
                         const w = vid.videoWidth;
@@ -418,7 +379,6 @@
                 } catch {}
             }
 
-            // Direct download (no rotation or proxy failed)
             downloadBtn.textContent = 'Downloading...';
             const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(currentUrl)}`;
             try {
