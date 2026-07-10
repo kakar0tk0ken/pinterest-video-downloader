@@ -260,7 +260,7 @@
                 }
                 if (videoUrl === url) {
                     fetchBtn.disabled = false;
-                    showError('Could not extract video from this pin. Try this: open the pin in your browser \u2192 right-click the video \u2192 "Copy video URL" \u2192 paste it here. Or use a direct v1.pinimg.com/videos/... URL.');
+                    showError('Could not extract video from this pin. Try opening the pin in your browser, right-click the video \u2192 "Copy video URL", then paste it here. Or run a local server (python3 -m http.server) and access via http://localhost:8000/ for better proxy support.');
                     hideStatus();
                     return;
                 }
